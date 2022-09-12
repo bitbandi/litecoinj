@@ -91,7 +91,7 @@ publishing {
             artifact javadocJar
 
             pom {
-                description = 'A Java Bitcoin library'
+                description = 'A Java Litecoin library'
             }
         }
     }
