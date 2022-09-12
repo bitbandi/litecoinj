@@ -95,4 +95,16 @@ publishing {
             }
         }
     }
+    repositories {
+        def maven_url = findProperty('MAVEN_URL')
+        if (maven_url) {
+            maven {
+                credentials {
+                    username findProperty('MAVEN_USERNAME') ?: ''
+                    password findProperty('MAVEN_PASSWORD') ?: ''
+                }
+                url maven_url
+            }
+        }
+    }
 }
