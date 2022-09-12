@@ -22,7 +22,7 @@ import org.litecoinj.protocols.payments.PaymentProtocolException;
 import org.litecoinj.protocols.payments.PaymentSession;
 import org.litecoinj.uri.BitcoinURI;
 import org.litecoinj.uri.BitcoinURIParseException;
-import org.bitcoin.protocols.payments.Protos;
+import org.litecoin.protocols.payments.Protos;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

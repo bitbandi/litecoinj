@@ -17,8 +17,8 @@
 
 package org.litecoinj.tools;
 
-import org.bitcoinj.core.Sha256Hash;
-import org.bitcoinj.core.TransactionOutput;
+import org.litecoinj.core.Sha256Hash;
+import org.litecoinj.core.TransactionOutput;
 import org.litecoinj.crypto.*;
 import org.litecoinj.params.MainNetParams;
 import org.litecoinj.params.RegTestParams;
@@ -33,8 +33,8 @@ import org.litecoinj.store.*;
 import org.litecoinj.uri.BitcoinURI;
 import org.litecoinj.uri.BitcoinURIParseException;
 import org.litecoinj.utils.BriefLogFormatter;
-import org.bitcoinj.wallet.CoinSelection;
-import org.bitcoinj.wallet.CoinSelector;
+import org.litecoinj.wallet.CoinSelection;
+import org.litecoinj.wallet.CoinSelector;
 import org.litecoinj.wallet.DeterministicKeyChain;
 import org.litecoinj.wallet.DeterministicSeed;
 
@@ -253,7 +253,7 @@ public class WalletTool implements Callable<Integer> {
     private static AbstractBlockChain chain;
     private static PeerGroup peerGroup;
     private static Wallet wallet;
-    private static org.bitcoin.protocols.payments.Protos.PaymentRequest paymentRequest;
+    private static org.litecoin.protocols.payments.Protos.PaymentRequest paymentRequest;
 
     public static class Condition {
         public enum Type {
@@ -861,7 +861,7 @@ public class WalletTool implements Callable<Integer> {
                 System.exit(1);
             }
             try {
-                paymentRequest = org.bitcoin.protocols.payments.Protos.PaymentRequest.newBuilder().mergeFrom(stream).build();
+                paymentRequest = org.litecoin.protocols.payments.Protos.PaymentRequest.newBuilder().mergeFrom(stream).build();
             } catch(IOException e) {
                 System.err.println("Failed to parse payment request from file " + e.getMessage());
                 System.exit(1);
