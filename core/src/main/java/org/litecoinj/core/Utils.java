@@ -31,13 +31,13 @@ import java.util.TimeZone;
 import java.util.regex.Pattern;
 
 import org.bouncycastle.crypto.digests.RIPEMD160Digest;
+import org.bouncycastle.crypto.generators.SCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.io.BaseEncoding;
-import com.lambdaworks.crypto.SCrypt;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.util.concurrent.Uninterruptibles.sleepUninterruptibly;
 
@@ -543,7 +543,7 @@ public class Utils {
 
     public static byte[] scryptDigest(byte[] input) {
         try {
-            return SCrypt.scrypt(input, input, 1024, 1, 1, 32);
+            return SCrypt.generate(input, input, 1024, 1, 1, 32);
         } catch (Exception e) {
             return null;
         }

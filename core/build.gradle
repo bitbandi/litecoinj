@@ -12,7 +12,6 @@ dependencies {
     api 'com.google.guava:guava:31.0.1-android'
     api 'com.google.protobuf:protobuf-javalite:3.18.0'
     api 'com.squareup.okhttp3:okhttp:3.14.9'
-    implementation 'com.lambdaworks:scrypt:1.4.0'
     implementation 'org.slf4j:slf4j-api:1.7.32'
     implementation 'net.jcip:jcip-annotations:1.0'
     compileOnly 'org.fusesource.leveldbjni:leveldbjni-all:1.8'
