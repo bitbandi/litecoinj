@@ -94,6 +94,20 @@ public class LegacyAddress extends Address {
      *            only the public part is used
      * @return constructed address
      */
+    public static LegacyAddress fromKey(NetworkParameters params, ECKey key) {
+        return fromKey(params, key, ScriptType.P2PKH);
+    }
+
+    /**
+     * Construct a {@link LegacyAddress} that represents the public part of the given {@link ECKey}. Note that an address is
+     * derived from a hash of the public key and is not the public key itself.
+     * 
+     * @param params
+     *            network this address is valid for
+     * @param key
+     *            only the public part is used
+     * @return constructed address
+     */
     public static LegacyAddress fromKey(NetworkParameters params, ECKey key, ScriptType outputScriptType) {
         if(outputScriptType == ScriptType.P2PKH) {
             return fromPubKeyHash(params, key.getPubKeyHash());
