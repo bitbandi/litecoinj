@@ -16,7 +16,7 @@
 
 package org.litecoinj.params;
 
-import org.bitcoinj.core.Block;
+import org.litecoinj.core.Block;
 import org.litecoinj.core.Coin;
 import org.junit.Test;
 

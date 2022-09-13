@@ -35,7 +35,7 @@ import org.litecoinj.core.TransactionConfidence;
 import org.litecoinj.core.TransactionInput;
 import org.litecoinj.core.TransactionOutPoint;
 import org.litecoinj.core.TransactionOutput;
-import org.bitcoinj.core.TransactionWitness;
+import org.litecoinj.core.TransactionWitness;
 import org.litecoinj.core.Utils;
 import org.litecoinj.core.VerificationException;
 import org.litecoinj.core.TransactionConfidence.ConfidenceType;

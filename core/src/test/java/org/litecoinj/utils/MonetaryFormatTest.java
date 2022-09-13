@@ -28,7 +28,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import org.litecoinj.core.Coin;
-import org.bitcoinj.core.NetworkParameters;
+import org.litecoinj.core.NetworkParameters;
 
 public class MonetaryFormatTest {
 

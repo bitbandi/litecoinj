@@ -14,53 +14,68 @@
  * limitations under the License.
  */
 
-package org.bitcoinj.core;
+package org.litecoinj.core;
 
-import org.bitcoinj.params.UnitTestParams;
+import org.litecoinj.params.UnitTestParams;
 import org.junit.Test;
 
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.util.List;
 
-import static org.bitcoinj.core.Utils.HEX;
+import static org.litecoinj.core.Utils.HEX;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-public class AddressV1MessageTest {
+public class AddressV2MessageTest {
 
     private static final NetworkParameters UNITTEST = UnitTestParams.get();
-    // mostly copied from src/test/netbase_tests.cpp#stream_addrv1_hex and src/test/net_tests.cpp
+    // mostly copied from src/test/netbase_tests.cpp#stream_addrv2_hex and src/test/net_tests.cpp
     private static final String MESSAGE_HEX =
-            "04" // number of entries
+            "05" // number of entries
 
                     + "61bc6649" // time, Fri Jan  9 02:54:25 UTC 2009
-                    + "0000000000000000" // service flags, NODE_NONE
-                    + "00000000000000000000ffff00000001" // address, fixed 16 bytes (IPv4 embedded in IPv6)
+                    + "00" // service flags, COMPACTSIZE(NODE_NONE)
+                    + "01" // network id, IPv4
+                    + "04" // address length, COMPACTSIZE(4)
+                    + "00000001" // address
                     + "0000" // port
 
                     + "79627683" // time, Tue Nov 22 11:22:33 UTC 2039
-                    + "0100000000000000"  // service flags, NODE_NETWORK
-                    + "00000000000000000000000000000001" // address, fixed 16 bytes (IPv6)
+                    + "01" // service flags, COMPACTSIZE(NODE_NETWORK)
+                    + "02" // network id, IPv6
+                    + "10" // address length, COMPACTSIZE(16)
+                    + "00000000000000000000000000000001" // address
                     + "00f1" // port
 
                     + "ffffffff" // time, Sun Feb  7 06:28:15 UTC 2106
-                    + "4804000000000000" // service flags, NODE_WITNESS | NODE_COMPACT_FILTERS | NODE_NETWORK_LIMITED
-                    + "00000000000000000000000000000001" // address, fixed 16 bytes (IPv6)
+                    + "fd4804" // service flags, COMPACTSIZE(NODE_WITNESS | NODE_COMPACT_FILTERS | NODE_NETWORK_LIMITED)
+                    + "02" // network id, IPv6
+                    + "10" // address length, COMPACTSIZE(16)
+                    + "00000000000000000000000000000001" // address
                     + "f1f2" // port
 
                     + "00000000" // time
-                    + "0000000000000000" // service flags, NODE_NONE
-                    + "fd87d87eeb43f1f2f3f4f5f6f7f8f9fa" // address, fixed 16 bytes (TORv2)
+                    + "00" // service flags, COMPACTSIZE(NODE_NONE)
+                    + "03" // network id, TORv2
+                    + "0a" // address length, COMPACTSIZE(10)
+                    + "f1f2f3f4f5f6f7f8f9fa" // address
+                    + "0000" // port
+
+                    + "00000000" // time
+                    + "00" // service flags, COMPACTSIZE(NODE_NONE)
+                    + "04" // network id, TORv3
+                    + "20"// address length, COMPACTSIZE(32)
+                    + "53cd5648488c4707914182655b7664034e09e66f7e8cbf1084e654eb56c5bd88" // address
                     + "0000"; // port
 
     @Test
     public void roundtrip() {
-        AddressMessage message = new AddressV1Message(UNITTEST, HEX.decode(MESSAGE_HEX));
+        AddressMessage message = new AddressV2Message(UNITTEST, HEX.decode(MESSAGE_HEX));
 
         List<PeerAddress> addresses = message.getAddresses();
-        assertEquals(4, addresses.size());
+        assertEquals(5, addresses.size());
         PeerAddress a0 = addresses.get(0);
         assertEquals("2009-01-09T02:54:25Z", Utils.dateTimeFormat(a0.getTime() * 1000));
         assertEquals(0, a0.getServices().intValue());
@@ -89,6 +104,12 @@ public class AddressV1MessageTest {
         assertNull(a3.getAddr());
         assertEquals("6hzph5hv6337r6p2.onion", a3.getHostname());
         assertEquals(0, a3.getPort());
+        PeerAddress a4 = addresses.get(4);
+        assertEquals("1970-01-01T00:00:00Z", Utils.dateTimeFormat(a4.getTime() * 1000));
+        assertEquals(0, a4.getServices().intValue());
+        assertNull(a4.getAddr());
+        assertEquals("kpgvmscirrdqpekbqjsvw5teanhatztpp2gl6eee4zkowvwfxwenqaid.onion", a4.getHostname());
+        assertEquals(0, a4.getPort());
 
         assertEquals(MESSAGE_HEX, HEX.encode(message.bitcoinSerialize()));
     }
