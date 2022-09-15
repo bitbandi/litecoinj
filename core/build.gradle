@@ -95,14 +95,24 @@ publishing {
         }
     }
     repositories {
-        def maven_url = findProperty('MAVEN_URL')
+        def maven_url = findProperty('MAVEN_URL') ?: System.getenv("MAVEN_URL")
         if (maven_url) {
             maven {
                 credentials {
-                    username findProperty('MAVEN_USERNAME') ?: ''
-                    password findProperty('MAVEN_PASSWORD') ?: ''
-                }
+                    username findProperty('MAVEN_USERNAME') ?: System.getenv("MAVEN_USERNAME")
+                    password findProperty('MAVEN_PASSWORD') ?: System.getenv("MAVEN_PASSWORD")                }
                 url maven_url
+            }
+        }
+        def github_actor = System.getenv("GITHUB_ACTOR")
+        if (github_actor) {
+            maven {
+                name = "GitHubPackages"
+                url = "https://maven.pkg.github.com/bitbandi/litecoinj"
+                credentials {
+                    username = github_actor
+                    password = System.getenv("GITHUB_TOKEN")
+                }
             }
         }
     }
