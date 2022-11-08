@@ -53,12 +53,18 @@ public class TestNet3Params extends AbstractBitcoinNetParams {
         subsidyDecreaseBlockCount = 840000;
         spendableCoinbaseDepth = 100;
         dnsSeeds = new String[] {
+/*
                 "testnet-seed.litecointools.com",
                 "seed-b.litecoin.loshan.co.uk",
                 "dnsseed-testnet.thrasher.io"
+*/
         };
         httpSeeds = null;
-        addrSeeds = null;
+        addrSeeds = new int[] {
+            0x70960905, 0x60393b25, 0x61730f33, 0x7d2a0d34, 0x5c13e340, 0xa0e11c4e, 0xc7032654, 0xa7682759,
+            0x2d9fa059, 0x1c374f5e, 0xe04cd85f, 0x9a781964, 0x8a83ed68, 0x68c65d8e, 0x3d28d1ad, 0x072ad1ad,
+            0xc9ddb4b9, 0x12663ac6, 0x0fc1eeca, 0x6900d8cb, 0xffae53d4,
+        };
         bip32HeaderP2PKHpub = 0x043587cf; // The 4 byte header that serializes in base58 to "tpub".
         bip32HeaderP2PKHpriv = 0x04358394; // The 4 byte header that serializes in base58 to "tprv"
         bip32HeaderP2WPKHpub = 0x045f1cf6; // The 4 byte header that serializes in base58 to "vpub".
