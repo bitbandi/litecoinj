@@ -19,6 +19,7 @@ package org.litecoinj.wallet;
 
 import com.google.common.annotations.*;
 import com.google.common.collect.*;
+import com.google.common.math.IntMath;
 import com.google.common.util.concurrent.*;
 import com.google.protobuf.*;
 import net.jcip.annotations.*;
@@ -76,6 +77,7 @@ import org.bouncycastle.crypto.params.*;
 import javax.annotation.*;
 import java.io.*;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.nio.ByteBuffer;
 import java.util.*;
 import java.util.concurrent.*;
@@ -3894,7 +3896,7 @@ public class Wallet extends BaseTaggableObject
 
             // If there is an input that isn't from us, i.e. this is a shared transaction
             Coin txInputsTotal = tx.getInputSum();
-            if (txOwnedInputsTotal != txInputsTotal) {
+            if (!txOwnedInputsTotal.equals(txInputsTotal)) {
 
                 // multiply our output total by the appropriate proportion to account for the inputs that we don't own
                 BigInteger txOutputTotalNum = new BigInteger(txOutputTotal.toString());
@@ -5209,7 +5211,8 @@ public class Wallet extends BaseTaggableObject
                 } else if (ScriptPattern.isP2WPKH(script)) {
                     key = findKeyFromPubKeyHash(ScriptPattern.extractHashFromP2WH(script), Script.ScriptType.P2WPKH);
                     checkNotNull(key, "Coin selection includes unspendable outputs");
-                    vsize += 2 + (script.getNumberOfBytesRequiredToSpend(key, redeemScript) + 3) / 4; // round up
+                    vsize += 2 + IntMath.divide(script.getNumberOfBytesRequiredToSpend(key, redeemScript), 4,
+                            RoundingMode.CEILING); // round up
                     //added a two because sometimes it might be 1 below required, so now it is hopefully 1 above in edge cases
                 } else if (ScriptPattern.isP2SH(script)) {
                     redeemScript = findRedeemDataFromScriptHash(ScriptPattern.extractHashFromP2SH(script)).redeemScript;

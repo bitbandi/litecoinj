@@ -36,6 +36,8 @@ public class TestNet3Params extends AbstractBitcoinNetParams {
     public static final int TESTNET_MAJORITY_WINDOW = 100;
     public static final int TESTNET_MAJORITY_REJECT_BLOCK_OUTDATED = 75;
     public static final int TESTNET_MAJORITY_ENFORCE_BLOCK_UPGRADE = 51;
+    private static final long GENESIS_TIME = 1486949366;
+    private static final long GENESIS_NONCE = 293345;
     private static final Sha256Hash GENESIS_HASH = Sha256Hash.wrap("4966625a4b2851d9fdee139e56211a0d88575f59ed816ff5e6a63deb4e3e29a0");
 
     public TestNet3Params() {
@@ -43,7 +45,7 @@ public class TestNet3Params extends AbstractBitcoinNetParams {
         id = ID_TESTNET;
         packetMagic = 0xfdd2c8f1L;
         targetTimespan = TARGET_TIMESPAN;
-        maxTarget = Utils.decodeCompactBits(0x1e0fffffL);
+        maxTarget = Utils.decodeCompactBits(Block.EASIEST_DIFFICULTY_TARGET);
         port = 19335;
         addressHeader = 111;
         p2shHeader = 196;
@@ -130,9 +132,9 @@ public class TestNet3Params extends AbstractBitcoinNetParams {
         synchronized (GENESIS_HASH) {
             if (genesisBlock == null) {
                 genesisBlock = Block.createGenesis(this);
-                genesisBlock.setDifficultyTarget(0x1e0ffff0L);
-                genesisBlock.setTime(1486949366L);
-                genesisBlock.setNonce(293345L);
+                genesisBlock.setDifficultyTarget(Block.STANDARD_MAX_DIFFICULTY_TARGET);
+                genesisBlock.setTime(GENESIS_TIME);
+                genesisBlock.setNonce(GENESIS_NONCE);
                 checkState(genesisBlock.getHash().equals(GENESIS_HASH), "Invalid genesis hash");
             }
         }
