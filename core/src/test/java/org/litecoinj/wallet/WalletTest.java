@@ -1756,15 +1756,16 @@ public class WalletTest extends TestWithWallet {
         createMarriedWallet(2, 2);
         Address address = wallet.currentReceiveAddress();
 
-        assertTrue(wallet.getBloomFilter(0.001).contains(address.getHash()));
+        double falsePositiveRate = 0.00001;
+        assertTrue(wallet.getBloomFilter(falsePositiveRate).contains(address.getHash()));
 
         Transaction t1 = createFakeTx(UNITTEST, CENT, address);
         TransactionOutPoint outPoint = new TransactionOutPoint(UNITTEST, 0, t1);
 
-        assertFalse(wallet.getBloomFilter(0.001).contains(outPoint.unsafeBitcoinSerialize()));
+        assertFalse(wallet.getBloomFilter(falsePositiveRate).contains(outPoint.unsafeBitcoinSerialize()));
 
         sendMoneyToWallet(BlockChain.NewBlockType.BEST_CHAIN, t1);
-        assertTrue(wallet.getBloomFilter(0.001).contains(outPoint.unsafeBitcoinSerialize()));
+        assertTrue(wallet.getBloomFilter(falsePositiveRate).contains(outPoint.unsafeBitcoinSerialize()));
     }
 
     @Test
@@ -2702,7 +2703,9 @@ public class WalletTest extends TestWithWallet {
         int vsize = request.tx.getVsize();
         Coin feePerVkb = fee.multiply(1000).divide(vsize);
         assertEquals(Coin.valueOf(14100), fee);
-        assertEquals(Transaction.DEFAULT_TX_FEE, feePerVkb);
+        // due to shorter than expected signature encoding, in rare cases we overpay a little
+        Coin overpaidFee = Transaction.DEFAULT_TX_FEE.add(valueOf(714));
+        assertTrue(feePerVkb.toString(),feePerVkb.equals(Transaction.DEFAULT_TX_FEE) || feePerVkb.equals(overpaidFee));
     }
 
     @Test

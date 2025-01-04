@@ -77,6 +77,13 @@ public class TestNet3Params extends AbstractBitcoinNetParams {
         majorityEnforceBlockUpgrade = TESTNET_MAJORITY_ENFORCE_BLOCK_UPGRADE;
         majorityRejectBlockOutdated = TESTNET_MAJORITY_REJECT_BLOCK_OUTDATED;
         majorityWindow = TESTNET_MAJORITY_WINDOW;
+
+        dnsSeeds = new String[] {
+        };
+        httpSeeds = new HttpDiscovery.Details[] {
+        };
+        addrSeeds = null;
+
     }
 
     private static TestNet3Params instance;
