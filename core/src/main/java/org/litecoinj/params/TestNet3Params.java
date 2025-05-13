@@ -45,7 +45,7 @@ public class TestNet3Params extends AbstractBitcoinNetParams {
         id = ID_TESTNET;
         packetMagic = 0xfdd2c8f1L;
         targetTimespan = TARGET_TIMESPAN;
-        maxTarget = Utils.decodeCompactBits(Block.EASIEST_DIFFICULTY_TARGET);
+        maxTarget = Utils.decodeCompactBits(Block.STANDARD_MAX_DIFFICULTY_TARGET);
         port = 19335;
         addressHeader = 111;
         p2shHeader = 196;
