@@ -54,19 +54,6 @@ public class TestNet3Params extends AbstractBitcoinNetParams {
         segwitAddressHrp = "tltc";
         subsidyDecreaseBlockCount = 840000;
         spendableCoinbaseDepth = 100;
-        dnsSeeds = new String[] {
-/*
-                "testnet-seed.litecointools.com",
-                "seed-b.litecoin.loshan.co.uk",
-                "dnsseed-testnet.thrasher.io"
-*/
-        };
-        httpSeeds = null;
-        addrSeeds = new int[] {
-            0x70960905, 0x60393b25, 0x61730f33, 0x7d2a0d34, 0x5c13e340, 0xa0e11c4e, 0xc7032654, 0xa7682759,
-            0x2d9fa059, 0x1c374f5e, 0xe04cd85f, 0x9a781964, 0x8a83ed68, 0x68c65d8e, 0x3d28d1ad, 0x072ad1ad,
-            0xc9ddb4b9, 0x12663ac6, 0x0fc1eeca, 0x6900d8cb, 0xffae53d4,
-        };
         bip32HeaderP2PKHpub = 0x043587cf; // The 4 byte header that serializes in base58 to "tpub".
         bip32HeaderP2PKHpriv = 0x04358394; // The 4 byte header that serializes in base58 to "tprv"
         bip32HeaderP2WPKHpub = 0x045f1cf6; // The 4 byte header that serializes in base58 to "vpub".
@@ -79,11 +66,17 @@ public class TestNet3Params extends AbstractBitcoinNetParams {
         majorityWindow = TESTNET_MAJORITY_WINDOW;
 
         dnsSeeds = new String[] {
+                "seed-b.litecoin.loshan.co.uk",
         };
         httpSeeds = new HttpDiscovery.Details[] {
         };
-        addrSeeds = null;
-
+        addrSeeds = new int[] {
+            0x9d0448d9, 0x71c96c41, 0x2c9fb151, 0xa0445817, 0x46d237a2, 0x502d5f8d, 0x9538c012, 0x06c6c012,
+            0x73e6d223, 0x8ff45133, 0x966f5bd0, 0x66f410cc, 0xf4ef652e, 0x8263ff05, 0x90f45133, 0x9fc26003,
+            0x3aadce23, 0x198813a2, 0x8d2e5133, 0x39b5ff36, 0xe007bccf, 0x179913a2, 0x22c7fec7, 0x5c61ff05,
+            0x5b61ff05, 0xe695bb36, 0x73dc5333, 0xf006d812, 0x4656a936, 0x72f410cc, 0x64bad95f, 0x37658039,
+            0x8ef45133, 0xbb2d5f8d, 0xc30de322,
+        };
     }
 
     private static TestNet3Params instance;
