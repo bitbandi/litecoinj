@@ -139,7 +139,7 @@ public class TestNet3Params extends AbstractBitcoinNetParams {
         synchronized (GENESIS_HASH) {
             if (genesisBlock == null) {
                 genesisBlock = Block.createGenesis(this);
-                genesisBlock.setDifficultyTarget(Block.STANDARD_MAX_DIFFICULTY_TARGET);
+                genesisBlock.setDifficultyTarget(0x1e0ffff0L);
                 genesisBlock.setTime(GENESIS_TIME);
                 genesisBlock.setNonce(GENESIS_NONCE);
                 checkState(genesisBlock.getHash().equals(GENESIS_HASH), "Invalid genesis hash");
