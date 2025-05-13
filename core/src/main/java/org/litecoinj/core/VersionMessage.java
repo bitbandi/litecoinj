@@ -44,7 +44,7 @@ import java.util.Objects;
 public class VersionMessage extends Message {
 
     /** The version of this library release, as a string. */
-    public static final String BITCOINJ_VERSION = "0.2.3";
+    public static final String BITCOINJ_VERSION = "0.2.4";
     /** The value that is prepended to the subVer field of this application. */
     public static final String LIBRARY_SUBVER = "/litecoinj:" + BITCOINJ_VERSION + "/";
 
@@ -56,6 +56,8 @@ public class VersionMessage extends Message {
     public static final int NODE_BLOOM = 1 << 2;
     /** Indicates that a node can be asked for blocks and transactions including witness data. */
     public static final int NODE_WITNESS = 1 << 3;
+    /** Indicates the node will service basic block filter requests (BIP157, BIP158). */
+    public static final int NODE_COMPACT_FILTERS = 1 << 6;
     /** A service bit that denotes whether the peer has at least the last two days worth of blockchain (BIP159). */
     public static final int NODE_NETWORK_LIMITED = 1 << 10;
 
@@ -326,6 +328,10 @@ public class VersionMessage extends Message {
         if ((services & NODE_WITNESS) == NODE_WITNESS) {
             strings.add("WITNESS");
             services &= ~NODE_WITNESS;
+        }
+        if ((services & NODE_COMPACT_FILTERS) == NODE_COMPACT_FILTERS) {
+            strings.add("COMPACT_FILTERS");
+            services &= ~NODE_COMPACT_FILTERS;
         }
         if ((services & NODE_NETWORK_LIMITED) == NODE_NETWORK_LIMITED) {
             strings.add("NETWORK_LIMITED");
